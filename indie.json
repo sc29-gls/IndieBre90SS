@@ -1,0 +1,68 @@
+	[
+	{
+		"id": 1,
+		"nome_gioco": "gioco 1",
+		"giocato_quando": [
+			"2026/01/01"
+		],
+		"link_download": "link_gioco1",
+		"categorie": {
+			"gameplay": 1.5,
+			"audio": 1.25,
+			"grafica": 1.5,
+			"divertimento": 1.75,
+			"rigiocabilità": 1.25
+		}
+	},
+	{
+		"id": 2,
+		"nome_gioco": "gioco 2",
+		"giocato_quando": [
+			"2026/02/01",
+			"2026/01/08"	
+		],
+		"link_download": "link_gioco2",
+		"categorie": {
+			"gameplay": 2.5,
+			"audio": 2.25,
+			"grafica": 2.5,
+			"divertimento": 2.75,
+			"rigiocabilità": 2.25
+		}
+	},
+	{
+		"id": 3,
+		"nome_gioco": "gioco 3",
+		"giocato_quando": [
+			"2026/03/01",
+			"2026/03/08",
+			"2026/03/15"
+		],
+		"link_download": "link_gioco3",
+		"categorie": {
+			"gameplay": 3.5,
+			"audio": 3.25,
+			"grafica": 3.5,
+			"divertimento": 3.75,
+			"rigiocabilità": 3.25
+		}
+	},
+	{
+		"id": 4,
+		"nome_gioco": "gioco 4",
+		"giocato_quando": [
+			"2026/04/01",
+			"2026/04/08",
+			"2026/04/15",
+			"2026/04/22"
+		],
+		"link_download": "link_gioco4",
+		"categorie": {
+			"gameplay": 4.5,
+			"audio": 4.25,
+			"grafica": 4.5,
+			"divertimento": 4.75,
+			"rigiocabilità": 4.25
+		}
+	}
+]

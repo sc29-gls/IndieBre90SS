@@ -1,0 +1,25 @@
+1. lista giochi
+	restituisce i nomi di tutti i giochi in ordine di quando sono stati giocati
+	ES. gioco1, gioco2, gioco3, gioco4
+2. info singolo gioco
+	restituisce ranking, link per scaricarlo e quando è stato giocato 
+	ES. Ranking x/y, Link: https://link.com - Recupera i vod dei giorni giorno1, giorno2 per farti un'idea migliore
+3. categorie singolo gioco
+	restituisce le votazioni per singola categoria
+	ES. cat1: #, cat2: #, cat3: #, cat4: #
+4. top 3
+	restituisce i giochi piazzati meglio coi relativi voti
+	ES. #1 gioco1 (voto1) - #2 gioco2 (voto2) - #3 gioco3 (voto3)
+5. flop 3
+	restituisce i giochi piazzati peggio coi relativi voti
+	ES. #1 gioco1 (voto1) - #2 gioco2 (voto2) - #3 gioco3 (voto3)
+6. PING
+	restituisce messaggio di ping per tenere su il server
+7. else
+	restituisce le istruzioni
+	ES. Istruzioni: 
+	!indie lista -> giochi indie che abbiamo provato, 
+	!indie info nome_gioco -> info rapide sul gioco
+	!indie categorie nome_gioco -> voti per le singole categorie
+	!indie top3 -> attuale top3 
+	!indie flop3 -> attuale flop3
