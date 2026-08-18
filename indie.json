@@ -1,5 +1,21 @@
 	[
 	{
+		"id": 0,
+		"nome_gioco": "Noita",
+		"giocato_quando": [
+			"2026/07/21",
+			"2026/07/23"
+		],
+		"link_download": "https://store.steampowered.com/app/881100/Noita/",
+		"categorie": {
+			"gameplay": 3.5,
+			"audio": 2.25,
+			"grafica": 2.5,
+			"divertimento": 3.75,
+			"rigiocabilità": 3.25
+		}
+	},
+	{
 		"id": 1,
 		"nome_gioco": "gioco 1",
 		"giocato_quando": [
