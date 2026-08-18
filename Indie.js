@@ -80,7 +80,7 @@ app.get('/indie', (req, res) => {
 
             const stringa_posizione = `${posizione} su ${totale_giochi}`;
             
-            let message = `Valutazione: ${media_gioco} su 5 // 💹 Ranking attuale: ${stringa_posizione} // 🌐Link per scaricarlo: ${link_download} // 🟣 Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
+            let message = `💎Voto: ${media_gioco.toFixed(1)} su 5 // 💹Ranking: ${stringa_posizione} // 🌐Link per scaricarlo: ${link_download} // 🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
