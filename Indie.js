@@ -50,7 +50,7 @@ app.get('/indie', (req, res) => {
         
         // FIX: Corretto array_giochi.length() in array_giochi.length e ciclo per evitare errori fuori indice
         const lista_nomi_giochi = array_giochi.map(g => g.nome_gioco).join(' - ');
-        let message = `Gli indie che abbiamo valutato fin'ora sono: ${lista_nomi_giochi}`;
+        let message = `ecco la lista dei giochi indie che abbiamo provato fin'ora sono: ${lista_nomi_giochi}`;
         return res.send(message);
     }
 
@@ -78,13 +78,13 @@ app.get('/indie', (req, res) => {
             const posizione = medie_tutti_giochi.findIndex(m => m === media_gioco) + 1;
             const totale_giochi = array_giochi.length;
 
-            const stringa_posizione = `${posizione}/${totale_giochi}`;
+            const stringa_posizione = `${posizione} su ${totale_giochi}`;
             
-            let message = `Ranking: ${stringa_posizione}, Link per scaricarlo: ${link_download}, Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore`;
+            let message = `🎢 Ranking attuale: ${stringa_posizione}, Link per scaricarlo: ${link_download}. Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
-            let message = `Socio hai sbagliato a scrivere il nome del gioco, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
+            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
             return res.send(message);
         }
     }
@@ -98,13 +98,14 @@ app.get('/indie', (req, res) => {
         if (info_gioco) {
             console.log(`-> info trovate per gioco ${nome_gioco_cercato}`);
             const categorie = info_gioco.categorie;
-            const lista_categorie = Object.entries(categorie).map(([chiave, valore]) => `${chiave}: ${valore}/5`).join(', ');
+            const array_emoji = ['🕹️', '🔊', '🖥️', '🎯', '🔄'];
+            const lista_categorie = Object.entries(categorie).map(([chiave, valore], index) => `${array_emoji[index] || ''} ${chiave}: ${valore} su 5`.trim()).join(' // ');
 
             let message = `Valutazioni per ${dettagli_input} -> ${lista_categorie}`;
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
-            let message = `Socio hai sbagliato a scrivere il nome del gioco, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
+            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
             return res.send(message);
         }
     }
