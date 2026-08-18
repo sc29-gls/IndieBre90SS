@@ -149,7 +149,13 @@ app.get('/indie', (req, res) => {
     // FALLBACK / PARACADUTE (Esegue anche per "!indie help" o qualsiasi comando sconosciuto)
     // ==============================================================================
     console.log(`Richiesta istruzioni comando o comando sconosciuto: "${comando_bot}"`);
-    return res.send(`Istruzioni: ▶ "${comando_twitch} lista" -> giochi indie che abbiamo provato, ▶ "${comando_twitch} info nome_gioco" -> info rapide sul gioco, ▶ "${comando_twitch} categorie nome_gioco" -> voti per le singole categorie, ▶ "${comando_twitch} top3" -> attuale top3, ▶ "${comando_twitch} flop3" -> attuale flop3`); 
+    return res.send(`Istruzioni: 
+        ▶ "${comando_twitch} lista" -> giochi indie che abbiamo provato, 
+        ▶ "${comando_twitch} info nome_gioco" -> info rapide sul gioco, 
+        ▶ "${comando_twitch} categorie nome_gioco" -> voti per le singole categorie, 
+        ▶ "${comando_twitch} top3" -> attuale top3, 
+        ▶ "${comando_twitch} flop3" -> attuale flop3`
+    ); 
 });
 
 const PORT = process.env.PORT || 3000;
