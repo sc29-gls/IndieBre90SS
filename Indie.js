@@ -49,7 +49,7 @@ app.get('/indie', (req, res) => {
         console.log(`Richiesta: ${comando_twitch} ${comando_bot} -> fornire la lista dei giochi valutati`);
         
         // FIX: Corretto array_giochi.length() in array_giochi.length e ciclo per evitare errori fuori indice
-        const lista_nomi_giochi = array_giochi.map(g => g.nome_gioco).join(' - ');
+        const lista_nomi_giochi = array_giochi.map(g => g.nome_gioco).join(' // ');
         let message = `ecco la lista dei giochi indie che abbiamo provato fin'ora sono: ${lista_nomi_giochi}`;
         return res.send(message);
     }
@@ -70,7 +70,6 @@ app.get('/indie', (req, res) => {
                 const somma = valori.reduce((acc, val) => acc + val, 0);
                 return valori.length > 0 ? somma / valori.length : 0;
             };
-
             
             const media_gioco = calcolaMediaCategorie(info_gioco.categorie);
             const medie_tutti_giochi = array_giochi.map(gioco => calcolaMediaCategorie(gioco.categorie));
@@ -79,15 +78,19 @@ app.get('/indie', (req, res) => {
             const posizione = medie_tutti_giochi.findIndex(m => m === media_gioco) + 1;
             const totale_giochi = array_giochi.length;
             
-            const stringa_posizione = `${posizione} su ${totale_giochi}`;
+            const stringa_posizione = `${posizione}° su ${totale_giochi}`;
             
-            const voti = Object.values(gioco.categorie);
+            const voti = Object.values(info_gioco.categorie);
             const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
-            let message = `💎Voto: ${media} su 5 // 💹Ranking: ${stringa_posizione} // 🌐Link per scaricarlo: ${link_download} // 🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
+            let message = `💎Voto: ${media} su 5 // 
+                            💹Ranking: ${stringa_posizione} // 
+                            🌐Link per scaricarlo: ${link_download} // 
+                            🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
-            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
+            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, 
+                fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
             return res.send(message);
         }
     }
@@ -108,7 +111,8 @@ app.get('/indie', (req, res) => {
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
-            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
+            let message = `Socio hai sbagliato a scrivere il nome del gioco 😒😒, 
+                fai "${comando_twitch} lista" per sapere quali giochi sono stati valutati finora`;
             return res.send(message);
         }
     }
@@ -116,35 +120,45 @@ app.get('/indie', (req, res) => {
     // 4. Gestione "!indie top3"
     if (comando_bot === "top3") {
         console.log(`Richiesta: ${comando_twitch} ${comando_bot} -> fornire la top3 giochi valutati`);
-        let giochi_medie = array_giochi.map(gioco => {
-            const voti = Object.values(gioco.categorie);
-            const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
-            return { nome: gioco.nome_gioco, media };
-        });
-
-        giochi_medie.sort((a, b) => b.media - a.media);
-        let message = `La top3 attuale è: 
-        🥇 ${giochi_medie[0]?.nome || 'N/A'} (${Math.round((giochi_medie[0]?.media || 0)*10)/10} su 5) //
-        🥈 ${giochi_medie[1]?.nome || 'N/A'} (${Math.round((giochi_medie[1]?.media || 0)*10)/10} su 5) //
-        🥉 ${giochi_medie[2]?.nome || 'N/A'} (${Math.round((giochi_medie[2]?.media || 0)*10)/10} su 5) //`;
+        let message = '';
+        if (array_giochi.length < 3) {
+            message = `Socio non essere frettoloso, per avere una top3 aspetta che siano valutati almeno 3 giochi. Ad oggi siamo a ${array_giochi.length}`;
+        } else {
+            let giochi_medie = array_giochi.map(gioco => {
+                const voti = Object.values(gioco.categorie);
+                const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
+                return { nome: gioco.nome_gioco, media };
+            });
+    
+            giochi_medie.sort((a, b) => b.media - a.media);
+            message = `La top3 attuale è: 
+            🥇 ${giochi_medie[0]?.nome || 'N/A'} (${Math.round((giochi_medie[0]?.media || 0)*10)/10} su 5) //
+            🥈 ${giochi_medie[1]?.nome || 'N/A'} (${Math.round((giochi_medie[1]?.media || 0)*10)/10} su 5) //
+            🥉 ${giochi_medie[2]?.nome || 'N/A'} (${Math.round((giochi_medie[2]?.media || 0)*10)/10} su 5) `;
+        }
         return res.send(message);
     }
 
     // 5. Gestione "!indie flop3"
     if (comando_bot === "flop3") {
         console.log(`Richiesta: ${comando_twitch} ${comando_bot} -> fornire la flop3 giochi valutati`);
-        let giochi_medie = array_giochi.map(gioco => {
-            const voti = Object.values(gioco.categorie);
-            const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
-            return { nome: gioco.nome_gioco, media };
-        });
-
-        // FIX: Ordinamento crescente (dalla media più bassa a salire) per il flop3
-        giochi_medie.sort((a, b) => a.media - b.media);
-        let message = `La flop3 attuale è: 
-        💩🥇 ${giochi_medie[0]?.nome || 'N/A'} (${Math.round((giochi_medie[0]?.media || 0)*10)/10} su 5) //
-        💩🥈 ${giochi_medie[1]?.nome || 'N/A'} (${Math.round((giochi_medie[1]?.media || 0)*10)/10} su 5) //
-        💩🥉 ${giochi_medie[2]?.nome || 'N/A'} (${Math.round((giochi_medie[2]?.media || 0)*10)/10} su 5) //`;
+        let message = '';
+        if (array_giochi.length < 6) {
+            message = `Socio non essere frettoloso, per avere una flop3 aspetta che siano valutati almeno 6 giochi. Ad oggi siamo a ${array_giochi.length}`;
+        } else {
+            let giochi_medie = array_giochi.map(gioco => {
+                const voti = Object.values(gioco.categorie);
+                const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
+                return { nome: gioco.nome_gioco, media };
+            });
+    
+            // FIX: Ordinamento crescente (dalla media più bassa a salire) per il flop3
+            giochi_medie.sort((a, b) => a.media - b.media);
+            message = `La flop3 attuale è: 
+            💩🥇 ${giochi_medie[0]?.nome || 'N/A'} (${Math.round((giochi_medie[0]?.media || 0)*10)/10} su 5) //
+            💩🥈 ${giochi_medie[1]?.nome || 'N/A'} (${Math.round((giochi_medie[1]?.media || 0)*10)/10} su 5) //
+            💩🥉 ${giochi_medie[2]?.nome || 'N/A'} (${Math.round((giochi_medie[2]?.media || 0)*10)/10} su 5) `;
+        }
         return res.send(message);
     }
 
