@@ -79,10 +79,8 @@ app.get('/indie', (req, res) => {
             const totale_giochi = array_giochi.length;
             
             const stringa_posizione = `${posizione}° su ${totale_giochi}`;
-            
-            const voti = Object.values(info_gioco.categorie);
-            const media = voti.reduce((acc, val) => acc + val, 0) / voti.length;
-            let message = `💎Voto: ${media} su 5 // 
+
+            let message = `💎Voto: ${Math.round(media_gioco*10)/10} su 5 // 
                             💹Ranking: ${stringa_posizione} // 
                             🌐Link per scaricarlo: ${link_download} // 
                             🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
