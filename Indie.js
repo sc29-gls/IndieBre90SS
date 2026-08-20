@@ -50,7 +50,7 @@ app.get('/indie', (req, res) => {
         
         // FIX: Corretto array_giochi.length() in array_giochi.length e ciclo per evitare errori fuori indice
         const lista_nomi_giochi = array_giochi.map(g => g.nome_gioco).join(' // ');
-        let message = `ecco la lista dei giochi indie che abbiamo provato fin'ora sono: ${lista_nomi_giochi}`;
+        let message = `ecco la lista dei giochi indie che abbiamo provato fin'ora: ${lista_nomi_giochi}`;
         return res.send(message);
     }
 
