@@ -80,10 +80,18 @@ app.get('/indie', (req, res) => {
             
             const stringa_posizione = `${posizione}° su ${totale_giochi}`;
 
-            let message = `💎Voto: ${Math.round(media_gioco*10)/10} su 5 // 
-                            💹Ranking: ${stringa_posizione} // 
-                            🌐Link per scaricarlo: ${link_download} // 
-                            🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
+            const voto = `💎Voto: ${Math.round(media_gioco*10)/10} su 5`;
+            const ranking = `💹Ranking: ${stringa_posizione}`;
+            const link = `🌐Link per scaricarlo: ${link_download}`
+            const vodlist = `🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`
+
+            const array_messaggio = [voto, ranking, link];
+
+            if (Array.isArray(giocato_quando) && giocato_quando.length > 0) {
+                const vodlist = `🟣Recupera i vod dei giorni ${giocato_quando.join(', ')} per farti un'idea migliore❗`;
+                array_messaggio.push(vodlist);
+            }
+            const message = array_messaggio.join(' // ');
             return res.send(message);
         } else {
             console.log(`-> Nessun gioco trovato con il nome "${dettagli_input}".`);
@@ -150,7 +158,6 @@ app.get('/indie', (req, res) => {
                 return { nome: gioco.nome_gioco, media };
             });
     
-            // FIX: Ordinamento crescente (dalla media più bassa a salire) per il flop3
             giochi_medie.sort((a, b) => a.media - b.media);
             message = `La flop3 attuale è: 
             💩🥇 ${giochi_medie[0]?.nome || 'N/A'} (${Math.round((giochi_medie[0]?.media || 0)*10)/10} su 5) //
